@@ -1,0 +1,904 @@
+{
+    "info": {
+        "name": "Doctor Appointment Management API",
+        "description": "Complete API collection for Doctor Appointment Management System",
+        "version": "1.0.0",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Users Management",
+            "item": [
+                {
+                    "name": "Register User",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePassword123\",\n  \"confirmPassword\": \"SecurePassword123\",\n  \"role\": \"Patient\",\n  \"phone\": \"+1234567890\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users/register",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                "register"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Login User",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePassword123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users/login",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                "login"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get All Users",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User by ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users/{{userId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                "{{userId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update User",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"John Updated\",\n  \"phone\": \"+1234567891\",\n  \"isActive\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users/{{userId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                "{{userId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Change Password",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"currentPassword\": \"SecurePassword123\",\n  \"newPassword\": \"NewPassword456\",\n  \"confirmNewPassword\": \"NewPassword456\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users/{{userId}}/change-password",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                "{{userId}}",
+                                "change-password"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete User",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users/{{userId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                "{{userId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Users by Role",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users/by-role/Patient",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                "by-role",
+                                "Patient"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Specialties Management",
+            "item": [
+                {
+                    "name": "Get All Specialties",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/specialties",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "specialties"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Specialty by ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/specialties/{{specialtyId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "specialties",
+                                "{{specialtyId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Specialty",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Cardiology\",\n  \"description\": \"Heart and cardiovascular system\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/specialties",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "specialties"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Specialty",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Cardiology Updated\",\n  \"description\": \"Heart and cardiovascular system - updated\",\n  \"isActive\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/specialties/{{specialtyId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "specialties",
+                                "{{specialtyId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Specialty",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/specialties/{{specialtyId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "specialties",
+                                "{{specialtyId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Active Specialties",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/specialties/active",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "specialties",
+                                "active"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Doctors Management",
+            "item": [
+                {
+                    "name": "Get All Doctors",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/doctors",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "doctors"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Doctor by ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/doctors/{{doctorId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "doctors",
+                                "{{doctorId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Doctors by Specialty",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/doctors/specialty/{{specialtyId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "doctors",
+                                "specialty",
+                                "{{specialtyId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Doctor Available Slots",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/doctors/{{doctorId}}/available-slots?date=2025-09-04",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "doctors",
+                                "{{doctorId}}",
+                                "available-slots"
+                            ],
+                            "query": [
+                                {
+                                    "key": "date",
+                                    "value": "2025-09-04"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Doctor Profile",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"specialtyId\": \"{{specialtyId}}\",\n  \"licenseNumber\": \"MD123456\",\n  \"experience\": 10,\n  \"qualification\": \"MBBS, MD\",\n  \"consultationFee\": 150.00,\n  \"availability\": [\n    {\n      \"dayOfWeek\": \"Monday\",\n      \"startTime\": \"09:00:00\",\n      \"endTime\": \"17:00:00\",\n      \"isAvailable\": true\n    }\n  ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/doctors",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "doctors"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Doctor Profile",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"specialtyId\": \"{{specialtyId}}\",\n  \"licenseNumber\": \"MD123456\",\n  \"experience\": 12,\n  \"qualification\": \"MBBS, MD, PhD\",\n  \"consultationFee\": 200.00,\n  \"availability\": [\n    {\n      \"dayOfWeek\": \"Monday\",\n      \"startTime\": \"08:00:00\",\n      \"endTime\": \"16:00:00\",\n      \"isAvailable\": true\n    }\n  ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/doctors/{{doctorId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "doctors",
+                                "{{doctorId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Approve Doctor",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/doctors/{{doctorId}}/approve",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "doctors",
+                                "{{doctorId}}",
+                                "approve"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Doctor Availability",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "[\n  {\n    \"dayOfWeek\": \"Monday\",\n    \"startTime\": \"09:00:00\",\n    \"endTime\": \"17:00:00\",\n    \"isAvailable\": true\n  },\n  {\n    \"dayOfWeek\": \"Tuesday\",\n    \"startTime\": \"10:00:00\",\n    \"endTime\": \"18:00:00\",\n    \"isAvailable\": true\n  }\n]"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/doctors/{{doctorId}}/availability",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "doctors",
+                                "{{doctorId}}",
+                                "availability"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Doctor by User ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/doctors/user/{{userId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "doctors",
+                                "user",
+                                "{{userId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Approved Doctors",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/doctors/approved",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "doctors",
+                                "approved"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Pending Approval Doctors",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/doctors/pending-approval",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "doctors",
+                                "pending-approval"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Doctor",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/doctors/{{doctorId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "doctors",
+                                "{{doctorId}}"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Appointments Management",
+            "item": [
+                {
+                    "name": "Get Appointments",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/appointments?userId={{userId}}&userRole=Patient",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "appointments"
+                            ],
+                            "query": [
+                                {
+                                    "key": "userId",
+                                    "value": "{{userId}}"
+                                },
+                                {
+                                    "key": "userRole",
+                                    "value": "Patient"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Appointment by ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/appointments/{{appointmentId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "appointments",
+                                "{{appointmentId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Appointment",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"doctorId\": \"{{doctorId}}\",\n  \"appointmentDate\": \"2025-09-05T00:00:00Z\",\n  \"startTime\": \"09:00:00\",\n  \"endTime\": \"09:30:00\",\n  \"reasonForVisit\": \"Regular checkup\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/appointments?patientId={{userId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "appointments"
+                            ],
+                            "query": [
+                                {
+                                    "key": "patientId",
+                                    "value": "{{userId}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Appointment",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"appointmentDate\": \"2025-09-06T00:00:00Z\",\n  \"startTime\": \"10:00:00\",\n  \"endTime\": \"10:30:00\",\n  \"reasonForVisit\": \"Follow-up consultation\",\n  \"notes\": \"Patient requested time change\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/appointments/{{appointmentId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "appointments",
+                                "{{appointmentId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Appointment Status",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"status\": \"Approved\",\n  \"notes\": \"Appointment confirmed by doctor\",\n  \"cancellationReason\": null\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/appointments/{{appointmentId}}/status?userId={{userId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "appointments",
+                                "{{appointmentId}}",
+                                "status"
+                            ],
+                            "query": [
+                                {
+                                    "key": "userId",
+                                    "value": "{{userId}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Cancel Appointment",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"reason\": \"Patient emergency - need to reschedule\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/appointments/{{appointmentId}}/cancel?userId={{userId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "appointments",
+                                "{{appointmentId}}",
+                                "cancel"
+                            ],
+                            "query": [
+                                {
+                                    "key": "userId",
+                                    "value": "{{userId}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Search Appointments",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/appointments/search?patientId={{userId}}&status=Pending&page=1&pageSize=10",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "appointments",
+                                "search"
+                            ],
+                            "query": [
+                                {
+                                    "key": "patientId",
+                                    "value": "{{userId}}"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "Pending"
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "pageSize",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Patient Appointments",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/appointments/patient/{{userId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "appointments",
+                                "patient",
+                                "{{userId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Doctor Appointments",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/appointments/doctor/{{doctorId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "appointments",
+                                "doctor",
+                                "{{doctorId}}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Pending Appointments",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/appointments/pending",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "appointments",
+                                "pending"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Approved Appointments",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/appointments/approved",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "appointments",
+                                "approved"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Appointment",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/appointments/{{appointmentId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "appointments",
+                                "{{appointmentId}}"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Health Check",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "{{baseUrl}}/health",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "health"
+                    ]
+                }
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "https://localhost:7001",
+            "type": "string"
+        },
+        {
+            "key": "userId",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "doctorId",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "specialtyId",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "appointmentId",
+            "value": "",
+            "type": "string"
+        }
+    ]
+}
