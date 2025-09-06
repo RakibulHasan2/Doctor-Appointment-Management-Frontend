@@ -258,25 +258,6 @@ export default function AdminUsersPage() {
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                 <div className="flex space-x-2">
                                                     <button
-                                                        onClick={() => handleToggleUserStatus(user.Id, user.IsActive)}
-                                                        className={`inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded ${user.IsActive
-                                                                ? 'text-red-700 bg-red-100 hover:bg-red-200'
-                                                                : 'text-green-700 bg-green-100 hover:bg-green-200'
-                                                            } transition-colors`}
-                                                    >
-                                                        {user.IsActive ? (
-                                                            <>
-                                                                <UserX className="h-3 w-3 mr-1" />
-                                                                Deactivate
-                                                            </>
-                                                        ) : (
-                                                            <>
-                                                                <UserCheck className="h-3 w-3 mr-1" />
-                                                                Activate
-                                                            </>
-                                                        )}
-                                                    </button>
-                                                    <button
                                                         onClick={() => handleDeleteUser(user.Id, user.Name)}
                                                         className="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 transition-colors"
                                                     >
