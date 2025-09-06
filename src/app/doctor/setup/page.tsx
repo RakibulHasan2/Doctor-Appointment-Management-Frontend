@@ -113,13 +113,43 @@ export default function DoctorSetupPage() {
                 throw new Error('License number is required');
             }
 
+            // Validate MongoDB ObjectId format (24 hex characters)
+            const objectIdRegex = /^[0-9a-fA-F]{24}$/;
+            if (!objectIdRegex.test(user.Id)) {
+                throw new Error('Invalid User ID format');
+            }
+            if (!objectIdRegex.test(data.SpecialtyId)) {
+                throw new Error('Invalid Specialty ID format');
+            }
+
             // Convert form availability to backend format
             const backendAvailability = availability.map(slot => ({
                 DayOfWeek: slot.DayOfWeek.trim(),
-                StartTime: slot.StartTime + ":00", // Convert HH:MM to HH:MM:SS
-                EndTime: slot.EndTime + ":00",     // Convert HH:MM to HH:MM:SS
+                StartTime: slot.StartTime + ":00", // Convert "09:00" to "09:00:00"
+                EndTime: slot.EndTime + ":00",     // Convert "17:00" to "17:00:00"
                 IsAvailable: slot.IsAvailable
             }));
+
+            // Validate converted data
+            backendAvailability.forEach((slot, index) => {
+                if (!slot.DayOfWeek || typeof slot.DayOfWeek !== 'string') {
+                    throw new Error(`Invalid DayOfWeek at slot ${index}`);
+                }
+                if (!slot.StartTime || typeof slot.StartTime !== 'string') {
+                    throw new Error(`Invalid StartTime at slot ${index}`);
+                }
+                if (!slot.EndTime || typeof slot.EndTime !== 'string') {
+                    throw new Error(`Invalid EndTime at slot ${index}`);
+                }
+                // Basic time format validation
+                const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+                if (!timeRegex.test(slot.StartTime)) {
+                    throw new Error(`Invalid StartTime format at slot ${index}`);
+                }
+                if (!timeRegex.test(slot.EndTime)) {
+                    throw new Error(`Invalid EndTime format at slot ${index}`);
+                }
+            });
 
             // Ensure we have at least one availability slot
             if (availability.length === 0) {
@@ -150,8 +180,8 @@ export default function DoctorSetupPage() {
             backendAvailability.forEach((slot, index) => {
                 console.log(`Slot ${index}:`, {
                     DayOfWeek: slot.DayOfWeek,
-                    StartTime: slot.StartTime,
-                    EndTime: slot.EndTime,
+                    StartTime: slot.StartTime, // Will show "09:00:00"
+                    EndTime: slot.EndTime,     // Will show "17:00:00"
                     IsAvailable: slot.IsAvailable
                 });
             });

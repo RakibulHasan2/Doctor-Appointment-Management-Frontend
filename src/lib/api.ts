@@ -9,6 +9,23 @@ function timeStringToTicks(timeString: string): number {
     return totalSeconds * 10000000; // Convert to ticks
 }
 
+// Utility function to convert day name to .NET DayOfWeek enum
+function dayNameToDayOfWeekEnum(dayName: string): number {
+    const dayMap: Record<string, number> = {
+        'Sunday': 0,
+        'Monday': 1,
+        'Tuesday': 2,
+        'Wednesday': 3,
+        'Thursday': 4,
+        'Friday': 5,
+        'Saturday': 6
+    };
+    return dayMap[dayName] ?? 1; // Default to Monday if not found
+}
+
+// Export utility functions for use in components
+export { timeStringToTicks, dayNameToDayOfWeekEnum };
+
 // User types based on backend API documentation
 export interface User {
     Id: string;
@@ -107,9 +124,9 @@ export interface UpdateSpecialtyRequest {
 
 // Doctor availability types
 export interface DoctorAvailability {
-    DayOfWeek: string;
-    StartTime: string; // HH:MM:SS format
-    EndTime: string;   // HH:MM:SS format
+    DayOfWeek: string; // String format: "Sunday", "Monday", etc.
+    StartTime: string; // TimeSpan format: "09:00:00"
+    EndTime: string;   // TimeSpan format: "17:00:00"
     IsAvailable: boolean;
 }
 
@@ -190,6 +207,15 @@ class ApiService {
             (response) => response,
             (error: unknown) => {
                 console.error('API Error:', error);
+
+                // Log detailed error information for debugging
+                if (axios.isAxiosError(error)) {
+                    console.error('Response status:', error.response?.status);
+                    console.error('Response data:', error.response?.data);
+                    console.error('Response headers:', error.response?.headers);
+                    console.error('Request config:', error.config);
+                }
+
                 return Promise.reject(error);
             }
         );

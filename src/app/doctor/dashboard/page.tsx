@@ -257,15 +257,15 @@ export default function DoctorDashboard() {
                         <div className="space-y-3">
                             <div className="flex justify-between">
                                 <span className="text-sm text-gray-600">Specialty</span>
-                                <span className="text-sm font-medium">{doctor.Specialty.Name}</span>
+                                <span className="text-sm font-medium text-black">{doctor.Specialty.Name}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-sm text-gray-600">License</span>
-                                <span className="text-sm font-medium">{doctor.LicenseNumber}</span>
+                                <span className="text-sm font-medium text-black">{doctor.LicenseNumber}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-sm text-gray-600">Experience</span>
-                                <span className="text-sm font-medium">{doctor.Experience} years</span>
+                                <span className="text-sm font-medium text-black">{doctor.Experience} years</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-sm text-gray-600">Status</span>
