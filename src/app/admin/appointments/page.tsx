@@ -309,7 +309,7 @@ export default function AdminAppointmentsPage() {
                                         <div className="ml-4">
                                             <button
                                                 onClick={() => setSelectedAppointment(appointment)}
-                                                className="flex items-center px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                                                className="flex items-center px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-black"
                                             >
                                                 <Eye className="h-4 w-4 mr-1" />
                                                 View Details

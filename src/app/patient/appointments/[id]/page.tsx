@@ -199,9 +199,9 @@ export default function AppointmentDetailsPage() {
                                 appointment.Status === 'Rejected' ? 'bg-red-50 border border-red-200' :
                                     appointment.Status === 'Completed' ? 'bg-blue-50 border border-blue-200' :
                                         'bg-purple-50 border border-purple-200'}`}>
-                        <div className="flex items-center">
+                        <div className="flex items-center text-black">
                             {getStatusIcon(appointment.Status)}
-                            <span className="ml-2 text-lg font-medium">
+                            <span className="ml-2 text-black text-lg font-medium">
                                 Appointment {appointment.Status}
                             </span>
                         </div>
@@ -420,8 +420,8 @@ export default function AppointmentDetailsPage() {
                                 <X className="h-6 w-6 text-red-600" />
                             </div>
                             <div className="ml-3">
-                                <h3 className="text-lg font-medium text-gray-900">Cancel Appointment</h3>
-                                <p className="text-sm text-gray-500 mt-1">
+                                <h3 className="text-lg font-medium text-black">Cancel Appointment</h3>
+                                <p className="text-sm text-black mt-1">
                                     Are you sure you want to cancel your appointment with Dr. {appointment.Doctor.User.Name}?
                                 </p>
                             </div>
@@ -435,7 +435,7 @@ export default function AppointmentDetailsPage() {
                                 value={cancelReason}
                                 onChange={(e) => setCancelReason(e.target.value)}
                                 rows={3}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-black"
                                 placeholder="Please provide a reason for cancellation..."
                             />
                         </div>

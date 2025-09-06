@@ -89,22 +89,27 @@ export default function BookAppointmentPage() {
 
     const loadAvailableSlots = useCallback(async (doctorId: string, date: string) => {
         try {
-            const doctor = doctors.find(d => d.Id === doctorId);
-            setSelectedDoctor(doctor || null);
-
             const slots = await apiService.getDoctorAvailableSlots(doctorId, date);
             setAvailableSlots(slots.filter(slot => slot.IsAvailable));
         } catch (error) {
             console.error('Error loading slots:', error);
             toast.error('Failed to load available slots');
         }
-    }, [doctors]);
+    }, []);
 
     useEffect(() => {
         if (watchSpecialty) {
             loadDoctorsBySpecialty(watchSpecialty);
         }
     }, [watchSpecialty, loadDoctorsBySpecialty]);
+
+    useEffect(() => {
+        if (watchDoctor) {
+            const doctor = doctors.find(d => d.Id === watchDoctor);
+            setSelectedDoctor(doctor || null);
+            setAvailableSlots([]); // Clear previous slots when doctor changes
+        }
+    }, [watchDoctor, doctors]);
 
     useEffect(() => {
         if (watchDoctor && watchDate) {
@@ -270,7 +275,7 @@ export default function BookAppointmentPage() {
                                                 value={`${slot.StartTime}-${slot.EndTime}`}
                                                 className="sr-only"
                                             />
-                                            <span className="text-sm font-medium">
+                                            <span className="text-sm font-medium text-black">
                                                 {slot.StartTime} - {slot.EndTime}
                                             </span>
                                         </label>
