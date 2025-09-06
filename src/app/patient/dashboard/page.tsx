@@ -130,21 +130,21 @@ export default function PatientDashboard() {
                                 className="flex items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
                             >
                                 <Plus className="h-6 w-6 text-blue-600 mr-2" />
-                                <span className="font-medium">Book New Appointment</span>
+                                <span className="font-medium text-black">Book New Appointment</span>
                             </button>
                             <button
                                 onClick={() => router.push('/patient/appointments')}
                                 className="flex items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
                             >
                                 <Calendar className="h-6 w-6 text-blue-600 mr-2" />
-                                <span className="font-medium">View All Appointments</span>
+                                <span className="font-medium text-black">View All Appointments</span>
                             </button>
                             <button
                                 onClick={() => router.push('/patient/profile')}
                                 className="flex items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
                             >
                                 <User className="h-6 w-6 text-blue-600 mr-2" />
-                                <span className="font-medium">Manage Profile</span>
+                                <span className="font-medium text-black">Manage Profile</span>
                             </button>
                         </div>
                     </div>
