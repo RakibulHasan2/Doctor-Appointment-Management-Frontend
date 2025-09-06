@@ -179,13 +179,6 @@ export default function AdminDashboard() {
                         <div className="flex items-center space-x-4">
                             <span className="text-gray-700">Welcome, {user?.Name}</span>
                             <button
-                                onClick={() => router.push('/admin/settings')}
-                                className="flex items-center text-gray-700 hover:text-blue-600"
-                            >
-                                <Settings className="h-4 w-4 mr-1" />
-                                Settings
-                            </button>
-                            <button
                                 onClick={handleLogout}
                                 className="flex items-center text-gray-700 hover:text-red-600"
                             >
@@ -311,70 +304,70 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Pending Doctor Approvals */}
-                {pendingDoctors.filter(doctor => !doctor.IsRejected).length > 0 && (
-                    <div className="bg-white rounded-lg shadow mb-8">
-                        <div className="px-6 py-4 border-b border-gray-200">
-                            <h3 className="text-lg font-medium text-gray-900">Pending Doctor Approvals</h3>
-                        </div>
-                        <div className="divide-y divide-gray-200">
-                            {pendingDoctors.filter(doctor => !doctor.IsRejected).map((doctor) => (
-                                <div key={doctor.Id} className="p-6">
-                                    <div className="flex items-start justify-between">
-                                        <div className="flex-1">
-                                            <h4 className="text-sm font-medium text-gray-900 mb-2">
-                                                Dr. {doctor.User.Name}
-                                            </h4>
-                                            <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
-                                                <div>
-                                                    <span className="font-medium">Specialty:</span> {doctor.Specialty.Name}
-                                                </div>
-                                                <div>
-                                                    <span className="font-medium">License:</span> {doctor.LicenseNumber}
-                                                </div>
-                                                <div>
-                                                    <span className="font-medium">Experience:</span> {doctor.Experience} years
-                                                </div>
-                                                <div>
-                                                    <span className="font-medium">Fee:</span> ${doctor.ConsultationFee}
-                                                </div>
+
+                <div className="bg-white rounded-lg shadow mb-8">
+                    <div className="px-6 py-4 border-b border-gray-200">
+                        <h3 className="text-lg font-medium text-gray-900">Pending Doctor Approvals</h3>
+                    </div>
+                    <div className="divide-y divide-gray-200">
+                        {pendingDoctors.filter(doctor => !doctor.IsRejected).map((doctor) => (
+                            <div key={doctor.Id} className="p-6">
+                                <div className="flex items-start justify-between">
+                                    <div className="flex-1">
+                                        <h4 className="text-sm font-medium text-gray-900 mb-2">
+                                            Dr. {doctor.User.Name}
+                                        </h4>
+                                        <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
+                                            <div>
+                                                <span className="font-medium">Specialty:</span> {doctor.Specialty.Name}
                                             </div>
-                                            <div className="mt-2">
-                                                <span className="text-sm font-medium text-gray-600">Qualifications:</span>
-                                                <p className="text-sm text-gray-600">{doctor.Qualification}</p>
+                                            <div>
+                                                <span className="font-medium">License:</span> {doctor.LicenseNumber}
                                             </div>
-                                            <div className="mt-2">
-                                                <span className="text-sm font-medium text-gray-600">Email:</span>
-                                                <span className="text-sm text-gray-600 ml-1">{doctor.User.Email}</span>
+                                            <div>
+                                                <span className="font-medium">Experience:</span> {doctor.Experience} years
                                             </div>
-                                            {doctor.IsRejected && doctor.RejectionReason && (
-                                                <div className="mt-2">
-                                                    <span className="text-sm font-medium text-red-600">Rejection Reason:</span>
-                                                    <p className="text-sm text-red-600 mt-1 bg-red-50 p-2 rounded border border-red-200">
-                                                        {doctor.RejectionReason}
-                                                    </p>
-                                                </div>
-                                            )}
+                                            <div>
+                                                <span className="font-medium">Fee:</span> ${doctor.ConsultationFee}
+                                            </div>
                                         </div>
-                                        <div className="flex space-x-2 ml-4">
-                                            <button
-                                                onClick={() => handleDoctorApproval(doctor.Id, true)}
-                                                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm"
-                                            >
-                                                Approve
-                                            </button>
-                                            <button
-                                                onClick={() => handleDoctorApproval(doctor.Id, false)}
-                                                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm"
-                                            >
-                                                Reject
-                                            </button>
+                                        <div className="mt-2">
+                                            <span className="text-sm font-medium text-gray-600">Qualifications:</span>
+                                            <p className="text-sm text-gray-600">{doctor.Qualification}</p>
                                         </div>
+                                        <div className="mt-2">
+                                            <span className="text-sm font-medium text-gray-600">Email:</span>
+                                            <span className="text-sm text-gray-600 ml-1">{doctor.User.Email}</span>
+                                        </div>
+                                        {doctor.IsRejected && doctor.RejectionReason && (
+                                            <div className="mt-2">
+                                                <span className="text-sm font-medium text-red-600">Rejection Reason:</span>
+                                                <p className="text-sm text-red-600 mt-1 bg-red-50 p-2 rounded border border-red-200">
+                                                    {doctor.RejectionReason}
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="flex space-x-2 ml-4">
+                                        <button
+                                            onClick={() => handleDoctorApproval(doctor.Id, true)}
+                                            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm"
+                                        >
+                                            Approve
+                                        </button>
+                                        <button
+                                            onClick={() => handleDoctorApproval(doctor.Id, false)}
+                                            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm"
+                                        >
+                                            Reject
+                                        </button>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
+                            </div>
+                        ))}
                     </div>
-                )}
+                </div>
+
 
                 {/* Recent Appointments */}
                 <div className="bg-white rounded-lg shadow">

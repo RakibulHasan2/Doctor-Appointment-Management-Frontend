@@ -9,9 +9,7 @@ import {
     Filter,
     UserCheck,
     UserX,
-    Edit,
     Trash2,
-    Plus,
     Mail,
     Phone
 } from 'lucide-react';
@@ -185,7 +183,7 @@ export default function AdminUsersPage() {
                             Users ({filteredUsers.length})
                         </h2>
                     </div>
-                    
+
                     {filteredUsers.length > 0 ? (
                         <div className="overflow-x-auto">
                             <table className="min-w-full divide-y divide-gray-200">
@@ -249,9 +247,8 @@ export default function AdminUsersPage() {
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                                    user.IsActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                                                }`}>
+                                                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${user.IsActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                                    }`}>
                                                     {user.IsActive ? 'Active' : 'Inactive'}
                                                 </span>
                                             </td>
@@ -262,11 +259,10 @@ export default function AdminUsersPage() {
                                                 <div className="flex space-x-2">
                                                     <button
                                                         onClick={() => handleToggleUserStatus(user.Id, user.IsActive)}
-                                                        className={`inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded ${
-                                                            user.IsActive
+                                                        className={`inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded ${user.IsActive
                                                                 ? 'text-red-700 bg-red-100 hover:bg-red-200'
                                                                 : 'text-green-700 bg-green-100 hover:bg-green-200'
-                                                        } transition-colors`}
+                                                            } transition-colors`}
                                                     >
                                                         {user.IsActive ? (
                                                             <>
@@ -299,8 +295,8 @@ export default function AdminUsersPage() {
                             <Users className="h-12 w-12 mx-auto mb-4 text-gray-300" />
                             <h3 className="text-sm font-medium text-gray-900 mb-2">No users found</h3>
                             <p className="text-sm text-gray-500">
-                                {searchTerm || selectedRole !== 'All' 
-                                    ? 'Try adjusting your search or filter criteria.' 
+                                {searchTerm || selectedRole !== 'All'
+                                    ? 'Try adjusting your search or filter criteria.'
                                     : 'No users have been registered yet.'
                                 }
                             </p>
