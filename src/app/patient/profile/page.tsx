@@ -70,14 +70,14 @@ export default function PatientProfilePage() {
             return;
         }
         setUser(currentUser);
-        
+
         // Pre-fill the form with current user data
         profileForm.reset({
             name: currentUser.Name,
             email: currentUser.Email,
             phone: currentUser.Phone || '',
         });
-        
+
         setLoading(false);
     }, [router, profileForm]);
 
@@ -194,22 +194,20 @@ export default function PatientProfilePage() {
                         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
                             <button
                                 onClick={() => setActiveTab('profile')}
-                                className={`py-4 px-6 border-b-2 font-medium text-sm ${
-                                    activeTab === 'profile'
-                                        ? 'border-blue-500 text-blue-600'
-                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                }`}
+                                className={`py-4 px-6 border-b-2 font-medium text-sm ${activeTab === 'profile'
+                                    ? 'border-blue-500 text-blue-600'
+                                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                    }`}
                             >
                                 <User className="h-4 w-4 inline mr-2" />
                                 Profile Information
                             </button>
                             <button
                                 onClick={() => setActiveTab('password')}
-                                className={`py-4 px-6 border-b-2 font-medium text-sm ${
-                                    activeTab === 'password'
-                                        ? 'border-blue-500 text-blue-600'
-                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                }`}
+                                className={`py-4 px-6 border-b-2 font-medium text-sm ${activeTab === 'password'
+                                    ? 'border-blue-500 text-blue-600'
+                                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                    }`}
                             >
                                 <Lock className="h-4 w-4 inline mr-2" />
                                 Change Password
@@ -234,7 +232,7 @@ export default function PatientProfilePage() {
                                                 <input
                                                     {...profileForm.register('name')}
                                                     type="text"
-                                                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                                                 />
                                             </div>
                                             {profileForm.formState.errors.name && (
@@ -250,11 +248,11 @@ export default function PatientProfilePage() {
                                                 Email Address *
                                             </label>
                                             <div className="relative">
-                                                <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                                                <Mail className="absolute left-3 top-3 h-4 w-4 text-black" />
                                                 <input
                                                     {...profileForm.register('email')}
                                                     type="email"
-                                                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                                                 />
                                             </div>
                                             {profileForm.formState.errors.email && (
@@ -270,11 +268,11 @@ export default function PatientProfilePage() {
                                                 Phone Number (Optional)
                                             </label>
                                             <div className="relative">
-                                                <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                                                <Phone className="absolute left-3 top-3 h-4 w-4 text-black" />
                                                 <input
                                                     {...profileForm.register('phone')}
                                                     type="tel"
-                                                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                                                     placeholder="+1 (555) 123-4567"
                                                 />
                                             </div>
@@ -312,16 +310,16 @@ export default function PatientProfilePage() {
                                                 Current Password *
                                             </label>
                                             <div className="relative">
-                                                <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                                                <Lock className="absolute left-3 top-3 h-4 w-4 text-black" />
                                                 <input
                                                     {...passwordForm.register('currentPassword')}
                                                     type={showPasswords.current ? 'text' : 'password'}
-                                                    className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                                                 />
                                                 <button
                                                     type="button"
                                                     onClick={() => togglePasswordVisibility('current')}
-                                                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                                                    className="absolute right-3 top-3 text-black hover:text-gray-600"
                                                 >
                                                     {showPasswords.current ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                                 </button>
@@ -339,16 +337,16 @@ export default function PatientProfilePage() {
                                                 New Password *
                                             </label>
                                             <div className="relative">
-                                                <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                                                <Lock className="absolute left-3 top-3 h-4 w-4 text-black" />
                                                 <input
                                                     {...passwordForm.register('newPassword')}
                                                     type={showPasswords.new ? 'text' : 'password'}
-                                                    className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                                                 />
                                                 <button
                                                     type="button"
                                                     onClick={() => togglePasswordVisibility('new')}
-                                                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                                                    className="absolute right-3 top-3 text-black hover:text-gray-600"
                                                 >
                                                     {showPasswords.new ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                                 </button>
@@ -366,16 +364,16 @@ export default function PatientProfilePage() {
                                                 Confirm New Password *
                                             </label>
                                             <div className="relative">
-                                                <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                                                <Lock className="absolute left-3 top-3 h-4 w-4 text-black" />
                                                 <input
                                                     {...passwordForm.register('confirmNewPassword')}
                                                     type={showPasswords.confirm ? 'text' : 'password'}
-                                                    className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                                                 />
                                                 <button
                                                     type="button"
                                                     onClick={() => togglePasswordVisibility('confirm')}
-                                                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                                                    className="absolute right-3 top-3 text-black hover:text-gray-600"
                                                 >
                                                     {showPasswords.confirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                                 </button>
