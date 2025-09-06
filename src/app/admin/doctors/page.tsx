@@ -63,9 +63,11 @@ export default function AdminDoctorsPage() {
         // Filter by status
         if (selectedStatus !== 'All') {
             if (selectedStatus === 'Approved') {
-                filtered = filtered.filter(doctor => doctor.IsApproved);
+                filtered = filtered.filter(doctor => doctor.IsApproved && !doctor.IsRejected);
             } else if (selectedStatus === 'Pending') {
-                filtered = filtered.filter(doctor => !doctor.IsApproved);
+                filtered = filtered.filter(doctor => !doctor.IsApproved && !doctor.IsRejected);
+            } else if (selectedStatus === 'Rejected') {
+                filtered = filtered.filter(doctor => doctor.IsRejected || doctor.Status === 'Rejected');
             }
         }
 
@@ -88,7 +90,16 @@ export default function AdminDoctorsPage() {
                 await apiService.approveDoctor(doctorId);
                 toast.success('Doctor approved successfully');
             } else {
-                await apiService.rejectDoctor(doctorId);
+                const reason = prompt('Please enter a reason for rejection:');
+                if (reason === null) {
+                    // User cancelled the prompt
+                    return;
+                }
+                if (!reason.trim()) {
+                    toast.error('Please provide a reason for rejection');
+                    return;
+                }
+                await apiService.rejectDoctor(doctorId, reason.trim());
                 toast.success('Doctor rejected successfully');
             }
             loadDoctors();
@@ -111,16 +122,34 @@ export default function AdminDoctorsPage() {
         }
     };
 
-    const getStatusColor = (isApproved: boolean) => {
-        return isApproved
-            ? 'bg-green-100 text-green-800'
-            : 'bg-yellow-100 text-yellow-800';
+    const getStatusColor = (doctor: Doctor) => {
+        if (doctor.IsRejected || doctor.Status === 'Rejected') {
+            return 'bg-red-100 text-red-800';
+        } else if (doctor.IsApproved || doctor.Status === 'Approved') {
+            return 'bg-green-100 text-green-800';
+        } else {
+            return 'bg-yellow-100 text-yellow-800';
+        }
     };
 
-    const getStatusIcon = (isApproved: boolean) => {
-        return isApproved
-            ? <CheckCircle className="h-4 w-4" />
-            : <AlertCircle className="h-4 w-4" />;
+    const getStatusIcon = (doctor: Doctor) => {
+        if (doctor.IsRejected || doctor.Status === 'Rejected') {
+            return <XCircle className="h-4 w-4" />;
+        } else if (doctor.IsApproved || doctor.Status === 'Approved') {
+            return <CheckCircle className="h-4 w-4" />;
+        } else {
+            return <AlertCircle className="h-4 w-4" />;
+        }
+    };
+
+    const getStatusText = (doctor: Doctor) => {
+        if (doctor.IsRejected || doctor.Status === 'Rejected') {
+            return 'Rejected';
+        } else if (doctor.IsApproved || doctor.Status === 'Approved') {
+            return 'Approved';
+        } else {
+            return 'Pending';
+        }
     };
 
     if (loading) {
@@ -183,6 +212,7 @@ export default function AdminDoctorsPage() {
                                 <option value="All">All Status</option>
                                 <option value="Approved">Approved</option>
                                 <option value="Pending">Pending Approval</option>
+                                <option value="Rejected">Rejected</option>
                             </select>
                         </div>
                     </div>
@@ -207,9 +237,9 @@ export default function AdminDoctorsPage() {
                                                 <p className="text-sm text-gray-600">{doctor.Specialty.Name}</p>
                                             </div>
                                         </div>
-                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(doctor.IsApproved)}`}>
-                                            {getStatusIcon(doctor.IsApproved)}
-                                            <span className="ml-1">{doctor.IsApproved ? 'Approved' : 'Pending'}</span>
+                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(doctor)}`}>
+                                            {getStatusIcon(doctor)}
+                                            <span className="ml-1">{getStatusText(doctor)}</span>
                                         </span>
                                     </div>
 
@@ -246,6 +276,16 @@ export default function AdminDoctorsPage() {
                                             <p className="text-sm text-black mt-1 line-clamp-2">{doctor.Qualification}</p>
                                         </div>
 
+                                        {/* Rejection Reason */}
+                                        {doctor.IsRejected && doctor.RejectionReason && (
+                                            <div>
+                                                <span className="text-sm font-medium text-red-700">Rejection Reason:</span>
+                                                <p className="text-sm text-red-600 mt-1 bg-red-50 p-2 rounded border border-red-200">
+                                                    {doctor.RejectionReason}
+                                                </p>
+                                            </div>
+                                        )}
+
                                         {/* Availability */}
                                         <div>
                                             <span className="text-sm font-medium text-gray-700">Availability:</span>
@@ -263,13 +303,13 @@ export default function AdminDoctorsPage() {
                                     <div className="flex space-x-2 pt-4 border-t border-gray-200">
                                         <button
                                             onClick={() => setSelectedDoctor(doctor)}
-                                            className="flex items-center px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                                            className="flex items-center px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-black"
                                         >
                                             <Eye className="h-4 w-4 mr-1" />
                                             View Details
                                         </button>
 
-                                        {!doctor.IsApproved ? (
+                                        {!doctor.IsApproved && !doctor.IsRejected ? (
                                             <>
                                                 <button
                                                     onClick={() => handleDoctorApproval(doctor.Id, true)}
@@ -286,7 +326,7 @@ export default function AdminDoctorsPage() {
                                                     Reject
                                                 </button>
                                             </>
-                                        ) : (
+                                        ) : doctor.IsApproved ? (
                                             <button
                                                 onClick={() => handleDeleteDoctor(doctor.UserId, doctor.User.Name)}
                                                 className="flex items-center px-3 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
@@ -294,7 +334,7 @@ export default function AdminDoctorsPage() {
                                                 <XCircle className="h-4 w-4 mr-1" />
                                                 Remove
                                             </button>
-                                        )}
+                                        ) : null}
                                     </div>
                                 </div>
                             </div>
@@ -316,18 +356,24 @@ export default function AdminDoctorsPage() {
                 </div>
 
                 {/* Summary Statistics */}
-                <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                         <div className="text-2xl font-bold text-green-600">
-                            {doctors.filter(d => d.IsApproved).length}
+                            {doctors.filter(d => d.IsApproved && !d.IsRejected).length}
                         </div>
                         <div className="text-sm text-gray-600">Approved Doctors</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                         <div className="text-2xl font-bold text-yellow-600">
-                            {doctors.filter(d => !d.IsApproved).length}
+                            {doctors.filter(d => !d.IsApproved && !d.IsRejected).length}
                         </div>
                         <div className="text-sm text-gray-600">Pending Approval</div>
+                    </div>
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                        <div className="text-2xl font-bold text-red-600">
+                            {doctors.filter(d => d.IsRejected).length}
+                        </div>
+                        <div className="text-sm text-gray-600">Rejected</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                         <div className="text-2xl font-bold text-blue-600">
@@ -385,9 +431,9 @@ export default function AdminDoctorsPage() {
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700">Status</label>
-                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(selectedDoctor.IsApproved)}`}>
-                                            {getStatusIcon(selectedDoctor.IsApproved)}
-                                            <span className="ml-1">{selectedDoctor.IsApproved ? 'Approved' : 'Pending'}</span>
+                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(selectedDoctor)}`}>
+                                            {getStatusIcon(selectedDoctor)}
+                                            <span className="ml-1">{getStatusText(selectedDoctor)}</span>
                                         </span>
                                     </div>
                                 </div>
@@ -396,6 +442,21 @@ export default function AdminDoctorsPage() {
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Qualifications</label>
                                     <p className="text-black bg-gray-50 p-3 rounded-lg">{selectedDoctor.Qualification}</p>
                                 </div>
+
+                                {/* Rejection Reason */}
+                                {selectedDoctor.IsRejected && selectedDoctor.RejectionReason && (
+                                    <div>
+                                        <label className="block text-sm font-medium text-red-700 mb-2">Rejection Reason</label>
+                                        <p className="text-red-600 bg-red-50 p-3 rounded-lg border border-red-200">
+                                            {selectedDoctor.RejectionReason}
+                                        </p>
+                                        {selectedDoctor.RejectedAt && (
+                                            <p className="text-xs text-red-500 mt-2">
+                                                Rejected on: {new Date(selectedDoctor.RejectedAt).toLocaleDateString()} at {new Date(selectedDoctor.RejectedAt).toLocaleTimeString()}
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Availability Schedule</label>
@@ -416,7 +477,7 @@ export default function AdminDoctorsPage() {
                                 </div>
 
                                 <div className="flex space-x-2 pt-4">
-                                    {!selectedDoctor.IsApproved && (
+                                    {!selectedDoctor.IsApproved && !selectedDoctor.IsRejected && (
                                         <>
                                             <button
                                                 onClick={() => {

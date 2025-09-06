@@ -79,6 +79,10 @@ export interface Doctor {
     ConsultationFee: number;
     Availability: DoctorAvailability[];
     IsApproved: boolean;
+    IsRejected: boolean;
+    RejectionReason?: string;
+    RejectedAt?: string;
+    Status?: 'Pending' | 'Approved' | 'Rejected';
     IsActive: boolean;
     CreatedAt: string;
 }

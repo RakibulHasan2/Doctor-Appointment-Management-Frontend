@@ -83,21 +83,41 @@ export default function AdminDashboard() {
             if (approve) {
                 await apiService.approveDoctor(doctorId);
                 toast.success('Doctor approved successfully');
+                loadDashboardData(); // Reload data
             } else {
-                // Prompt for rejection reason
-                const reason = prompt('Please provide a reason for rejecting this doctor:');
-                if (!reason || reason.trim() === '') {
-                    toast.error('Rejection reason is required');
-                    return;
-                }
-                await apiService.rejectDoctor(doctorId, reason.trim());
-                toast.success('Doctor rejected successfully');
+                // Open rejection modal
+                setRejectingDoctorId(doctorId);
+                setShowRejectModal(true);
             }
-            loadDashboardData(); // Reload data
         } catch (error) {
             console.error('Error updating doctor approval:', error);
             toast.error('Failed to update doctor approval');
         }
+    };
+
+    const handleRejectDoctor = async () => {
+        if (!rejectionReason.trim()) {
+            toast.error('Please provide a reason for rejection');
+            return;
+        }
+
+        try {
+            await apiService.rejectDoctor(rejectingDoctorId, rejectionReason.trim());
+            toast.success('Doctor rejected successfully');
+            setShowRejectModal(false);
+            setRejectingDoctorId('');
+            setRejectionReason('');
+            loadDashboardData(); // Reload data
+        } catch (error) {
+            console.error('Error rejecting doctor:', error);
+            toast.error('Failed to reject doctor. Please try again.');
+        }
+    };
+
+    const handleCancelReject = () => {
+        setShowRejectModal(false);
+        setRejectingDoctorId('');
+        setRejectionReason('');
     };
 
     const handleLogout = () => {
@@ -291,13 +311,13 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Pending Doctor Approvals */}
-                {pendingDoctors.length > 0 && (
+                {pendingDoctors.filter(doctor => !doctor.IsRejected).length > 0 && (
                     <div className="bg-white rounded-lg shadow mb-8">
                         <div className="px-6 py-4 border-b border-gray-200">
                             <h3 className="text-lg font-medium text-gray-900">Pending Doctor Approvals</h3>
                         </div>
                         <div className="divide-y divide-gray-200">
-                            {pendingDoctors.map((doctor) => (
+                            {pendingDoctors.filter(doctor => !doctor.IsRejected).map((doctor) => (
                                 <div key={doctor.Id} className="p-6">
                                     <div className="flex items-start justify-between">
                                         <div className="flex-1">
@@ -326,6 +346,14 @@ export default function AdminDashboard() {
                                                 <span className="text-sm font-medium text-gray-600">Email:</span>
                                                 <span className="text-sm text-gray-600 ml-1">{doctor.User.Email}</span>
                                             </div>
+                                            {doctor.IsRejected && doctor.RejectionReason && (
+                                                <div className="mt-2">
+                                                    <span className="text-sm font-medium text-red-600">Rejection Reason:</span>
+                                                    <p className="text-sm text-red-600 mt-1 bg-red-50 p-2 rounded border border-red-200">
+                                                        {doctor.RejectionReason}
+                                                    </p>
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="flex space-x-2 ml-4">
                                             <button
@@ -400,6 +428,51 @@ export default function AdminDashboard() {
                     </div>
                 </div>
             </main>
+
+            {/* Rejection Modal */}
+            {showRejectModal && (
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+                    <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                        <div className="mt-3">
+                            <h3 className="text-lg font-medium text-gray-900 mb-4">
+                                Reject Doctor Application
+                            </h3>
+                            <p className="text-sm text-gray-600 mb-4">
+                                Please provide a reason for rejecting this doctor&apos;s application:
+                            </p>
+                            <textarea
+                                value={rejectionReason}
+                                onChange={(e) => setRejectionReason(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' && e.ctrlKey) {
+                                        handleRejectDoctor();
+                                    }
+                                }}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none text-black"
+                                rows={4}
+                                placeholder="Enter rejection reason... (Ctrl+Enter to submit)"
+                                autoFocus
+                            />
+                            <div className="flex justify-end space-x-3 mt-6">
+                                <button
+                                    type="button"
+                                    onClick={handleCancelReject}
+                                    className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleRejectDoctor}
+                                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                                >
+                                    Reject Doctor
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
