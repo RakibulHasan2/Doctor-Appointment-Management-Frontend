@@ -8,8 +8,8 @@ import { z } from 'zod';
 import {
     Calendar,
     Clock,
-    ArrowLeft,
-    CheckCircle
+    CheckCircle,
+    ArrowLeft
 } from 'lucide-react';
 import { apiService, User as UserType, Doctor, Specialty, AvailableSlot } from '@/lib/api';
 import toast from 'react-hot-toast';
@@ -48,6 +48,18 @@ export default function BookAppointmentPage() {
     const watchDoctor = watch('doctorId');
     const watchDate = watch('appointmentDate');
 
+    const loadSpecialties = useCallback(async () => {
+        try {
+            const data = await apiService.getActiveSpecialties();
+            setSpecialties(data);
+        } catch (error) {
+            console.error('Error loading specialties:', error);
+            toast.error('Failed to load specialties');
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
         const currentUser = apiService.getCurrentUser();
         if (!currentUser) {
@@ -60,19 +72,7 @@ export default function BookAppointmentPage() {
         }
         setUser(currentUser);
         loadSpecialties();
-    }, [router]);
-
-    const loadSpecialties = async () => {
-        try {
-            const data = await apiService.getActiveSpecialties();
-            setSpecialties(data);
-        } catch (error) {
-            console.error('Error loading specialties:', error);
-            toast.error('Failed to load specialties');
-        } finally {
-            setLoading(false);
-        }
-    };
+    }, [router, loadSpecialties]);
 
     const loadDoctorsBySpecialty = useCallback(async (specialtyId: string) => {
         try {
@@ -104,13 +104,13 @@ export default function BookAppointmentPage() {
         if (watchSpecialty) {
             loadDoctorsBySpecialty(watchSpecialty);
         }
-    }, [watchSpecialty]);
+    }, [watchSpecialty, loadDoctorsBySpecialty]);
 
     useEffect(() => {
         if (watchDoctor && watchDate) {
             loadAvailableSlots(watchDoctor, watchDate);
         }
-    }, [watchDoctor, watchDate]);
+    }, [watchDoctor, watchDate, loadAvailableSlots]);
 
     const onSubmit = async (data: AppointmentFormData) => {
         if (!user) return;
@@ -147,38 +147,27 @@ export default function BookAppointmentPage() {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Header */}
-            <header className="bg-white shadow-sm">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16 items-center">
-                        <div className="flex items-center">
-                            <button
-                                onClick={() => router.back()}
-                                className="mr-4 p-2 hover:bg-gray-100 rounded-full"
-                            >
-                                <ArrowLeft className="h-5 w-5" />
-                            </button>
-                            <Calendar className="h-8 w-8 text-blue-600" />
-                            <span className="ml-2 text-xl font-bold text-gray-900">Book Appointment</span>
-                        </div>
-                        <div className="flex items-center">
-                            <span className="text-gray-700">{user?.Name}</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="bg-white rounded-lg shadow p-6">
+                    <div className="flex items-center mb-6">
+                        <button
+                            onClick={() => router.back()}
+                            className="mr-4 p-2 hover:bg-gray-100 rounded-full"
+                        >
+                            <ArrowLeft className="h-5 w-5" />
+                        </button>
+                        <Calendar className="h-8 w-8 text-blue-600" />
+                        <span className="ml-2 text-xl font-bold text-black">Book Appointment</span>
+                    </div>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         {/* Specialty Selection */}
                         <div>
-                            <label htmlFor="specialtyId" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label htmlFor="specialtyId" className="block text-sm font-medium text-black mb-2">
                                 Select Specialty
                             </label>
                             <select
                                 {...register('specialtyId')}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                             >
                                 <option value="">Choose a specialty...</option>
                                 {specialties.map((specialty) => (
@@ -195,7 +184,7 @@ export default function BookAppointmentPage() {
                         {/* Doctor Selection */}
                         {doctors.length > 0 && (
                             <div>
-                                <label htmlFor="doctorId" className="block text-sm font-medium text-gray-700 mb-2">
+                                <label htmlFor="doctorId" className="block text-sm font-medium text-black mb-2">
                                     Select Doctor
                                 </label>
                                 <div className="space-y-3">
@@ -217,20 +206,20 @@ export default function BookAppointmentPage() {
                                                             value={doctor.Id}
                                                             className="mr-3"
                                                         />
-                                                        <h3 className="text-lg font-medium text-gray-900">
+                                                        <h3 className="text-lg font-medium text-black">
                                                             Dr. {doctor.User.Name}
                                                         </h3>
                                                     </div>
-                                                    <p className="text-sm text-gray-600 mb-1">{doctor.Specialty.Name}</p>
-                                                    <p className="text-sm text-gray-600 mb-2">{doctor.Qualification}</p>
-                                                    <div className="flex items-center text-xs text-gray-500 space-x-4">
+                                                    <p className="text-sm text-black mb-1">{doctor.Specialty.Name}</p>
+                                                    <p className="text-sm text-black mb-2">{doctor.Qualification}</p>
+                                                    <div className="flex items-center text-xs text-black space-x-4">
                                                         <span>{doctor.Experience} years experience</span>
                                                         <span>License: {doctor.LicenseNumber}</span>
                                                     </div>
                                                 </div>
                                                 <div className="text-right">
-                                                    <p className="text-lg font-bold text-gray-900">${doctor.ConsultationFee}</p>
-                                                    <p className="text-xs text-gray-500">Consultation Fee</p>
+                                                    <p className="text-lg font-bold text-black">${doctor.ConsultationFee}</p>
+                                                    <p className="text-xs text-black">Consultation Fee</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -245,14 +234,14 @@ export default function BookAppointmentPage() {
                         {/* Date Selection */}
                         {selectedDoctor && (
                             <div>
-                                <label htmlFor="appointmentDate" className="block text-sm font-medium text-gray-700 mb-2">
+                                <label htmlFor="appointmentDate" className="block text-sm font-medium text-black mb-2">
                                     Select Date
                                 </label>
                                 <input
                                     type="date"
                                     {...register('appointmentDate')}
                                     min={new Date().toISOString().split('T')[0]}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                                 />
                                 {errors.appointmentDate && (
                                     <p className="mt-1 text-sm text-red-600">{errors.appointmentDate.message}</p>
@@ -263,7 +252,7 @@ export default function BookAppointmentPage() {
                         {/* Time Slot Selection */}
                         {availableSlots.length > 0 && (
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-black mb-2">
                                     Select Time Slot
                                 </label>
                                 <div className="grid grid-cols-3 gap-3">
@@ -295,22 +284,22 @@ export default function BookAppointmentPage() {
 
                         {availableSlots.length === 0 && watchDoctor && watchDate && (
                             <div className="text-center py-8">
-                                <Clock className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                                <p className="text-gray-500">No available slots for the selected date</p>
-                                <p className="text-sm text-gray-400">Please try a different date</p>
+                                <Clock className="h-12 w-12 mx-auto mb-4 text-black" />
+                                <p className="text-black">No available slots for the selected date</p>
+                                <p className="text-sm text-black">Please try a different date</p>
                             </div>
                         )}
 
                         {/* Reason for Visit */}
                         {watch('timeSlot') && (
                             <div>
-                                <label htmlFor="reasonForVisit" className="block text-sm font-medium text-gray-700 mb-2">
+                                <label htmlFor="reasonForVisit" className="block text-sm font-medium text-black mb-2">
                                     Reason for Visit (Optional)
                                 </label>
                                 <textarea
                                     {...register('reasonForVisit')}
                                     rows={3}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                                     placeholder="Briefly describe your symptoms or reason for consultation..."
                                 />
                             </div>
@@ -321,7 +310,7 @@ export default function BookAppointmentPage() {
                             <div className="flex items-center justify-between pt-6 border-t">
                                 <div className="flex items-center">
                                     <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
-                                    <span className="text-sm text-gray-600">
+                                    <span className="text-sm text-black">
                                         Appointment with Dr. {selectedDoctor?.User.Name} on {watchDate} at {watch('timeSlot')}
                                     </span>
                                 </div>
@@ -336,7 +325,7 @@ export default function BookAppointmentPage() {
                         )}
                     </form>
                 </div>
-            </main>
+            </div>
         </div>
     );
 }

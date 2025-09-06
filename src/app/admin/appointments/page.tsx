@@ -86,13 +86,13 @@ export default function AdminAppointmentsPage() {
             case 'Rejected':
                 return 'text-red-600 bg-red-100';
             case 'Cancelled':
-                return 'text-gray-600 bg-gray-100';
+                return 'text-black bg-gray-100';
             case 'Completed':
                 return 'text-blue-600 bg-blue-100';
             case 'NoShow':
                 return 'text-orange-600 bg-orange-100';
             default:
-                return 'text-gray-600 bg-gray-100';
+                return 'text-black bg-gray-100';
         }
     };
 
@@ -131,7 +131,7 @@ export default function AdminAppointmentsPage() {
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading appointments...</p>
+                    <p className="mt-4 text-black">Loading appointments...</p>
                 </div>
             </div>
         );
@@ -149,14 +149,14 @@ export default function AdminAppointmentsPage() {
                                     onClick={() => router.push('/admin/dashboard')}
                                     className="mr-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
                                 >
-                                    <ArrowLeft className="h-5 w-5 text-gray-600" />
+                                    <ArrowLeft className="h-5 w-5 text-black" />
                                 </button>
                                 <div className="flex items-center">
                                     <Calendar className="h-6 w-6 text-blue-600 mr-2" />
-                                    <h1 className="text-2xl font-bold text-gray-900">Appointment Management</h1>
+                                    <h1 className="text-2xl font-bold text-black">Appointment Management</h1>
                                 </div>
                             </div>
-                            <div className="text-sm text-gray-600">
+                            <div className="text-sm text-black">
                                 Total Appointments: <span className="font-semibold text-black">{appointments.length}</span>
                             </div>
                         </div>
@@ -167,7 +167,7 @@ export default function AdminAppointmentsPage() {
                 <div className="bg-white shadow-sm rounded-lg mb-6 p-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="relative">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-black" />
                             <input
                                 type="text"
                                 placeholder="Search by patient, doctor, specialty, or reason..."
@@ -177,7 +177,7 @@ export default function AdminAppointmentsPage() {
                             />
                         </div>
                         <div className="relative">
-                            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-black" />
                             <select
                                 value={selectedStatus}
                                 onChange={(e) => setSelectedStatus(e.target.value)}
@@ -198,11 +198,11 @@ export default function AdminAppointmentsPage() {
                 {/* Appointments List */}
                 <div className="bg-white shadow-sm rounded-lg overflow-hidden">
                     <div className="px-6 py-4 border-b border-gray-200">
-                        <h2 className="text-lg font-medium text-gray-900">
+                        <h2 className="text-lg font-medium text-black">
                             Appointments ({filteredAppointments.length})
                         </h2>
                     </div>
-                    
+
                     {filteredAppointments.length > 0 ? (
                         <div className="divide-y divide-gray-200">
                             {filteredAppointments.map((appointment) => (
@@ -212,11 +212,11 @@ export default function AdminAppointmentsPage() {
                                             {/* Main Info */}
                                             <div className="flex items-center mb-3">
                                                 <div className="flex items-center">
-                                                    <User className="h-5 w-5 text-gray-400 mr-2" />
+                                                    <User className="h-5 w-5 text-black mr-2" />
                                                     <span className="text-lg font-medium text-black">
                                                         {appointment.Patient.Name}
                                                     </span>
-                                                    <span className="mx-2 text-gray-400">→</span>
+                                                    <span className="mx-2 text-black">→</span>
                                                     <span className="text-lg font-medium text-black">
                                                         Dr. {appointment.Doctor.User.Name}
                                                     </span>
@@ -230,25 +230,25 @@ export default function AdminAppointmentsPage() {
                                             {/* Details Grid */}
                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-3">
                                                 <div className="flex items-center">
-                                                    <Calendar className="h-4 w-4 text-gray-400 mr-2" />
+                                                    <Calendar className="h-4 w-4 text-black mr-2" />
                                                     <span className="text-sm text-black">
                                                         {formatDate(appointment.AppointmentDate)}
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center">
-                                                    <Clock className="h-4 w-4 text-gray-400 mr-2" />
+                                                    <Clock className="h-4 w-4 text-black mr-2" />
                                                     <span className="text-sm text-black">
                                                         {formatTime(appointment.StartTime)} - {formatTime(appointment.EndTime)}
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center">
-                                                    <User className="h-4 w-4 text-gray-400 mr-2" />
+                                                    <User className="h-4 w-4 text-black mr-2" />
                                                     <span className="text-sm text-black">
                                                         {appointment.Doctor.Specialty.Name}
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center">
-                                                    <DollarSign className="h-4 w-4 text-gray-400 mr-2" />
+                                                    <DollarSign className="h-4 w-4 text-black mr-2" />
                                                     <span className="text-sm text-black">
                                                         ${appointment.ConsultationFee}
                                                     </span>
@@ -258,14 +258,14 @@ export default function AdminAppointmentsPage() {
                                             {/* Contact Info */}
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3 text-sm">
                                                 <div>
-                                                    <span className="font-medium text-gray-700">Patient: </span>
+                                                    <span className="font-medium text-black">Patient: </span>
                                                     <span className="text-black">{appointment.Patient.Email}</span>
                                                     {appointment.Patient.Phone && (
                                                         <span className="text-black"> • {appointment.Patient.Phone}</span>
                                                     )}
                                                 </div>
                                                 <div>
-                                                    <span className="font-medium text-gray-700">Doctor: </span>
+                                                    <span className="font-medium text-black">Doctor: </span>
                                                     <span className="text-black">{appointment.Doctor.User.Email}</span>
                                                     {appointment.Doctor.User.Phone && (
                                                         <span className="text-black"> • {appointment.Doctor.User.Phone}</span>
@@ -276,25 +276,25 @@ export default function AdminAppointmentsPage() {
                                             {/* Reason & Notes */}
                                             {appointment.ReasonForVisit && (
                                                 <div className="mb-2">
-                                                    <span className="text-sm font-medium text-gray-700">Reason: </span>
+                                                    <span className="text-sm font-medium text-black">Reason: </span>
                                                     <span className="text-sm text-black">{appointment.ReasonForVisit}</span>
                                                 </div>
                                             )}
                                             {appointment.Notes && (
                                                 <div className="mb-2">
-                                                    <span className="text-sm font-medium text-gray-700">Notes: </span>
+                                                    <span className="text-sm font-medium text-black">Notes: </span>
                                                     <span className="text-sm text-black">{appointment.Notes}</span>
                                                 </div>
                                             )}
                                             {appointment.CancellationReason && (
                                                 <div className="mb-2">
-                                                    <span className="text-sm font-medium text-gray-700">Cancellation Reason: </span>
+                                                    <span className="text-sm font-medium text-black">Cancellation Reason: </span>
                                                     <span className="text-sm text-red-600">{appointment.CancellationReason}</span>
                                                 </div>
                                             )}
 
                                             {/* Timestamps */}
-                                            <div className="text-xs text-gray-500 mt-2">
+                                            <div className="text-xs text-black mt-2">
                                                 <span>Created: {formatDate(appointment.CreatedAt)}</span>
                                                 {appointment.ApprovedAt && (
                                                     <span className="ml-4">Approved: {formatDate(appointment.ApprovedAt)}</span>
@@ -323,9 +323,9 @@ export default function AdminAppointmentsPage() {
                         <div className="p-12 text-center">
                             <Calendar className="h-12 w-12 mx-auto mb-4 text-gray-300" />
                             <h3 className="text-sm font-medium text-gray-900 mb-2">No appointments found</h3>
-                            <p className="text-sm text-gray-500">
-                                {searchTerm || selectedStatus !== 'All' 
-                                    ? 'Try adjusting your search or filter criteria.' 
+                            <p className="text-sm text-black">
+                                {searchTerm || selectedStatus !== 'All'
+                                    ? 'Try adjusting your search or filter criteria.'
                                     : 'No appointments have been scheduled yet.'
                                 }
                             </p>
@@ -339,37 +339,37 @@ export default function AdminAppointmentsPage() {
                         <div className="text-2xl font-bold text-yellow-600">
                             {appointments.filter(a => a.Status === 'Pending').length}
                         </div>
-                        <div className="text-sm text-gray-600">Pending</div>
+                        <div className="text-sm text-black">Pending</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                         <div className="text-2xl font-bold text-green-600">
                             {appointments.filter(a => a.Status === 'Approved').length}
                         </div>
-                        <div className="text-sm text-gray-600">Approved</div>
+                        <div className="text-sm text-black">Approved</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                         <div className="text-2xl font-bold text-blue-600">
                             {appointments.filter(a => a.Status === 'Completed').length}
                         </div>
-                        <div className="text-sm text-gray-600">Completed</div>
+                        <div className="text-sm text-black">Completed</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                         <div className="text-2xl font-bold text-red-600">
                             {appointments.filter(a => a.Status === 'Cancelled').length}
                         </div>
-                        <div className="text-sm text-gray-600">Cancelled</div>
+                        <div className="text-sm text-black">Cancelled</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                         <div className="text-2xl font-bold text-red-600">
                             {appointments.filter(a => a.Status === 'Rejected').length}
                         </div>
-                        <div className="text-sm text-gray-600">Rejected</div>
+                        <div className="text-sm text-black">Rejected</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                         <div className="text-2xl font-bold text-orange-600">
                             {appointments.filter(a => a.Status === 'NoShow').length}
                         </div>
-                        <div className="text-sm text-gray-600">No Show</div>
+                        <div className="text-sm text-black">No Show</div>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,7 +16,7 @@ const loginSchema = z.object({
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
-export default function LoginPage() {
+function LoginForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
@@ -77,12 +77,12 @@ export default function LoginPage() {
                         </div>
                     </div>
                     <h1 className="text-3xl font-bold text-black mb-2">Welcome Back</h1>
-                    <p className="text-gray-600">Sign in to your account</p>
+                    <p className="text-black">Sign in to your account</p>
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                     <div>
-                        <label htmlFor="Email" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="Email" className="block text-sm font-medium text-black mb-2">
                             Email Address
                         </label>
                         <input
@@ -98,7 +98,7 @@ export default function LoginPage() {
                     </div>
 
                     <div>
-                        <label htmlFor="Password" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="Password" className="block text-sm font-medium text-black mb-2">
                             Password
                         </label>
                         <div className="relative">
@@ -115,9 +115,9 @@ export default function LoginPage() {
                                 onClick={() => setShowPassword(!showPassword)}
                             >
                                 {showPassword ? (
-                                    <EyeOff className="h-5 w-5 text-gray-400" />
+                                    <EyeOff className="h-5 w-5 text-black" />
                                 ) : (
-                                    <Eye className="h-5 w-5 text-gray-400" />
+                                    <Eye className="h-5 w-5 text-black" />
                                 )}
                             </button>
                         </div>
@@ -136,7 +136,7 @@ export default function LoginPage() {
                 </form>
 
                 <div className="mt-6 text-center">
-                    <p className="text-gray-600">
+                    <p className="text-black">
                         Don&apos;t have an account?{' '}
                         <a href="/register" className="text-blue-600 hover:text-blue-700 font-medium">
                             Sign up
@@ -145,5 +145,13 @@ export default function LoginPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <LoginForm />
+        </Suspense>
     );
 }

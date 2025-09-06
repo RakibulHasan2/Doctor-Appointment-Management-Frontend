@@ -195,7 +195,7 @@ export default function DoctorProfilePage() {
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading profile...</p>
+                    <p className="mt-4 text-black">Loading profile...</p>
                 </div>
             </div>
         );
@@ -205,8 +205,8 @@ export default function DoctorProfilePage() {
         return (
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
                 <div className="text-center">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-2">Profile Not Found</h2>
-                    <p className="text-gray-600 mb-4">Unable to load your doctor profile.</p>
+                    <h2 className="text-xl font-semibold text-black mb-2">Profile Not Found</h2>
+                    <p className="text-black mb-4">Unable to load your doctor profile.</p>
                     <button
                         onClick={() => router.push('/doctor/dashboard')}
                         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
@@ -230,11 +230,11 @@ export default function DoctorProfilePage() {
                                     onClick={() => router.push('/doctor/dashboard')}
                                     className="mr-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
                                 >
-                                    <ArrowLeft className="h-5 w-5 text-gray-600" />
+                                    <ArrowLeft className="h-5 w-5 text-black" />
                                 </button>
                                 <div className="flex items-center">
                                     <User className="h-6 w-6 text-blue-600 mr-2" />
-                                    <h1 className="text-2xl font-bold text-gray-900">Doctor Profile</h1>
+                                    <h1 className="text-2xl font-bold text-black">Doctor Profile</h1>
                                 </div>
                             </div>
                             <div className="flex items-center space-x-3">
@@ -251,7 +251,7 @@ export default function DoctorProfilePage() {
                                         <button
                                             type="button"
                                             onClick={handleCancel}
-                                            className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                                            className="px-4 py-2 border border-gray-300 text-black rounded-lg hover:bg-gray-50 transition-colors"
                                         >
                                             Cancel
                                         </button>
@@ -273,33 +273,33 @@ export default function DoctorProfilePage() {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                     {/* Personal Information */}
                     <div className="bg-white shadow-sm rounded-lg p-6">
-                        <h2 className="text-lg font-medium text-gray-900 mb-4 flex items-center">
+                        <h2 className="text-lg font-medium text-black mb-4 flex items-center">
                             <User className="h-5 w-5 mr-2 text-blue-600" />
                             Personal Information
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                                <div className="px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-700">
+                                <label className="block text-sm font-medium text-black mb-1">Full Name</label>
+                                <div className="px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-black">
                                     Dr. {user?.Name}
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                                <div className="px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-700">
+                                <label className="block text-sm font-medium text-black mb-1">Email</label>
+                                <div className="px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-black">
                                     {user?.Email}
                                 </div>
                             </div>
                             {user?.Phone && (
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                                    <div className="px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-700">
+                                    <label className="block text-sm font-medium text-black mb-1">Phone</label>
+                                    <div className="px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-black">
                                         {user.Phone}
                                     </div>
                                 </div>
                             )}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                                <label className="block text-sm font-medium text-black mb-1">Status</label>
                                 <div className={`px-3 py-2 border border-gray-300 rounded-lg ${doctor.IsApproved ? 'bg-green-50 text-green-700' : 'bg-yellow-50 text-yellow-700'}`}>
                                     {doctor.IsApproved ? '✓ Approved' : '⏳ Pending Approval'}
                                 </div>
@@ -309,13 +309,13 @@ export default function DoctorProfilePage() {
 
                     {/* Professional Information */}
                     <div className="bg-white shadow-sm rounded-lg p-6">
-                        <h2 className="text-lg font-medium text-gray-900 mb-4 flex items-center">
+                        <h2 className="text-lg font-medium text-black mb-4 flex items-center">
                             <Stethoscope className="h-5 w-5 mr-2 text-blue-600" />
                             Professional Information
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label htmlFor="SpecialtyId" className="block text-sm font-medium text-gray-700 mb-1">
+                                <label htmlFor="SpecialtyId" className="block text-sm font-medium text-black mb-1">
                                     Medical Specialty *
                                 </label>
                                 {isEditing ? (
@@ -342,7 +342,7 @@ export default function DoctorProfilePage() {
                             </div>
 
                             <div>
-                                <label htmlFor="LicenseNumber" className="block text-sm font-medium text-gray-700 mb-1">
+                                <label htmlFor="LicenseNumber" className="block text-sm font-medium text-black mb-1">
                                     Medical License Number *
                                 </label>
                                 {isEditing ? (
@@ -364,7 +364,7 @@ export default function DoctorProfilePage() {
                             </div>
 
                             <div>
-                                <label htmlFor="Experience" className="block text-sm font-medium text-gray-700 mb-1">
+                                <label htmlFor="Experience" className="block text-sm font-medium text-black mb-1">
                                     Years of Experience *
                                 </label>
                                 {isEditing ? (
@@ -387,7 +387,7 @@ export default function DoctorProfilePage() {
                             </div>
 
                             <div>
-                                <label htmlFor="ConsultationFee" className="block text-sm font-medium text-gray-700 mb-1">
+                                <label htmlFor="ConsultationFee" className="block text-sm font-medium text-black mb-1">
                                     Consultation Fee (USD) *
                                 </label>
                                 {isEditing ? (
@@ -412,7 +412,7 @@ export default function DoctorProfilePage() {
                         </div>
 
                         <div className="mt-4">
-                            <label htmlFor="Qualification" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="Qualification" className="block text-sm font-medium text-black mb-1">
                                 Qualifications & Education *
                             </label>
                             {isEditing ? (
@@ -437,7 +437,7 @@ export default function DoctorProfilePage() {
                     {/* Availability Schedule */}
                     <div className="bg-white shadow-sm rounded-lg p-6">
                         <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-lg font-medium text-gray-900 flex items-center">
+                            <h2 className="text-lg font-medium text-black flex items-center">
                                 <Clock className="h-5 w-5 mr-2 text-blue-600" />
                                 Availability Schedule
                             </h2>
@@ -458,7 +458,7 @@ export default function DoctorProfilePage() {
                                 <div key={index} className="bg-gray-50 p-4 rounded-lg">
                                     <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">Day</label>
+                                            <label className="block text-sm font-medium text-black mb-1">Day</label>
                                             {isEditing ? (
                                                 <select
                                                     value={slot.DayOfWeek}
@@ -477,7 +477,7 @@ export default function DoctorProfilePage() {
                                         </div>
 
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+                                            <label className="block text-sm font-medium text-black mb-1">Start Time</label>
                                             {isEditing ? (
                                                 <input
                                                     type="time"
@@ -493,7 +493,7 @@ export default function DoctorProfilePage() {
                                         </div>
 
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">End Time</label>
+                                            <label className="block text-sm font-medium text-black mb-1">End Time</label>
                                             {isEditing ? (
                                                 <input
                                                     type="time"
@@ -509,7 +509,7 @@ export default function DoctorProfilePage() {
                                         </div>
 
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">Available</label>
+                                            <label className="block text-sm font-medium text-black mb-1">Available</label>
                                             {isEditing ? (
                                                 <div className="flex items-center">
                                                     <input
@@ -518,7 +518,7 @@ export default function DoctorProfilePage() {
                                                         onChange={(e) => updateAvailability(index, 'IsAvailable', e.target.checked)}
                                                         className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                                     />
-                                                    <span className="ml-2 text-sm text-gray-600">Available</span>
+                                                    <span className="ml-2 text-sm text-black">Available</span>
                                                 </div>
                                             ) : (
                                                 <div className="px-3 py-2 border border-gray-300 rounded-lg bg-white">

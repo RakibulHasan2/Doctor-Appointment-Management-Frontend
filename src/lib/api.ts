@@ -279,6 +279,15 @@ class ApiService {
         return response.data;
     }
 
+    async changePassword(id: string, passwordData: {
+        userId: string;
+        currentPassword: string;
+        newPassword: string;
+        confirmNewPassword: string;
+    }): Promise<void> {
+        await this.api.post(`/users/${id}/change-password`, passwordData);
+    }
+
     async deleteUser(id: string): Promise<void> {
         await this.api.delete(`/users/${id}`);
     }
