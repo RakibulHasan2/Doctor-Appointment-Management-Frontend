@@ -359,6 +359,10 @@ class ApiService {
         await this.api.patch(`/doctors/${id}/approve`);
     }
 
+    async rejectDoctor(id: string, reason: string): Promise<void> {
+        await this.api.patch(`/doctors/${id}/reject`, { Reason: reason });
+    }
+
     async updateDoctorAvailability(id: string, availability: DoctorAvailability[]): Promise<void> {
         await this.api.patch(`/doctors/${id}/availability`, availability);
     }

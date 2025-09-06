@@ -32,6 +32,9 @@ export default function AdminDashboard() {
     const [pendingDoctors, setPendingDoctors] = useState<Doctor[]>([]);
     const [recentAppointments, setRecentAppointments] = useState<Appointment[]>([]);
     const [loading, setLoading] = useState(true);
+    const [showRejectModal, setShowRejectModal] = useState(false);
+    const [rejectingDoctorId, setRejectingDoctorId] = useState<string>('');
+    const [rejectionReason, setRejectionReason] = useState('');
 
     useEffect(() => {
         const currentUser = apiService.getCurrentUser();
@@ -81,8 +84,14 @@ export default function AdminDashboard() {
                 await apiService.approveDoctor(doctorId);
                 toast.success('Doctor approved successfully');
             } else {
-                // For rejection, we might need to implement a separate endpoint
-                toast('Doctor rejection functionality to be implemented');
+                // Prompt for rejection reason
+                const reason = prompt('Please provide a reason for rejecting this doctor:');
+                if (!reason || reason.trim() === '') {
+                    toast.error('Rejection reason is required');
+                    return;
+                }
+                await apiService.rejectDoctor(doctorId, reason.trim());
+                toast.success('Doctor rejected successfully');
             }
             loadDashboardData(); // Reload data
         } catch (error) {
@@ -254,28 +263,28 @@ export default function AdminDashboard() {
                                 className="flex items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
                             >
                                 <Users className="h-6 w-6 text-blue-600 mr-2" />
-                                <span className="font-medium">Manage Users</span>
+                                <span className="font-medium text-black">Manage Users</span>
                             </button>
                             <button
                                 onClick={() => router.push('/admin/doctors')}
                                 className="flex items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
                             >
                                 <UserCheck className="h-6 w-6 text-blue-600 mr-2" />
-                                <span className="font-medium">Manage Doctors</span>
+                                <span className="font-medium text-black">Manage Doctors</span>
                             </button>
                             <button
                                 onClick={() => router.push('/admin/appointments')}
                                 className="flex items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
                             >
                                 <Calendar className="h-6 w-6 text-blue-600 mr-2" />
-                                <span className="font-medium">View Appointments</span>
+                                <span className="font-medium text-black">View Appointments</span>
                             </button>
                             <button
-                                onClick={() => router.push('/admin/specialties')}
+                                onClick={() => router.push('/admin/setup')}
                                 className="flex items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
                             >
                                 <TrendingUp className="h-6 w-6 text-blue-600 mr-2" />
-                                <span className="font-medium">Manage Specialties</span>
+                                <span className="font-medium text-black">System Setup</span>
                             </button>
                         </div>
                     </div>
